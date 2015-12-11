@@ -1,0 +1,275 @@
+ancho_max = 1024px
+azul = #091564
+dorado = #E5B306
+
+*
+	margin 0
+	padding 0
+body
+	min-width: 250px
+	width 100%
+	background url("../img/bg.jpg")
+	border-top: 10px solid black
+
+header
+	display block
+	margin 0 auto
+	max-width ancho_max
+	background url("../img/bg_header.jpg")
+	background-size 100% 100%
+	img
+		margin-left: 2em
+		margin-top 1em
+	.menu_bar
+			font-size:  50px
+			display none
+			margin-bottom 5px
+			margin-right: 15px
+			float right
+			.bt_menu
+				padding-bottom 5px
+				text-decoration none
+				color dorado
+	nav
+		display block
+		height 30px
+		max-width ancho_max
+		margin 0 auto
+		background url("../img/bg_nav.jpg")
+		background-size 100% 100%
+		font-size: 22px
+		ul
+			position: relative
+			float right
+			li 
+				display inline
+				margin 5px
+				background dorado
+				padding 5px
+				border-radius 10px 0 0 0
+				a 
+					text-decoration none
+					font-weight bold
+					color azul
+			li:hover
+				padding-top 10px
+				padding-left 10px
+
+.contenido
+	.main_login
+		height 100%
+		width 100%
+		margin 0 auto
+		color dorado
+		padding-top 100px
+		.contenido_login
+			width 40%
+			margin 0 auto
+			font-size 22px
+			input
+				margin 5px
+				color azul
+				font-weight bold 
+	.back
+		margin 10px
+		color dorado
+		font-size 35px
+		text-decoration none
+		float left
+	display block
+	max-width ancho_max
+	margin 0 auto
+	background: url("../img/bg_contenido.jpg")
+	min-height: 300px
+	text-align: center
+	.main 
+		display flex
+		.contenido_main
+			margin 0 auto
+			h1
+				color white
+	.main_clientes, .main_catalogos
+		width 80%
+		margin 0 auto
+		.menu_clientes, .menu_catalogos, .main
+			margin 0 auto
+			width 100%
+			margin-top 20px
+			border  5px solid black 
+			margin-top 15
+			border-radius 15px
+			padding 10px
+			display block
+			float left
+			ul 
+				li 	
+					font-size 30px 
+					display block
+					margin-bottom 25px
+					a
+						text-decoration none  
+						color: white
+				li:hover
+					background dorado
+	.main_newCliente
+		display flex
+		width 80%
+		margin 0 auto
+		.form_newCliente
+			h1
+				color dorado
+			width 100%
+			input
+				font-weight bold 
+				color azul
+				font-size 20px 
+				margin 0 auto
+				padding 5px
+				margin-bottom 10px 
+				display block
+	.main_renta
+		display flex
+		width 80%
+		margin 0 auto
+		.renta_contenido
+			width 100%
+			h1
+				color dorado
+			input
+				margin 10px
+			table
+				border 2px solid dorado
+				margin 0 auto
+				width 70%
+				input
+					width 150px
+				th,td
+					margin 5px
+					padding 5px
+					border 2px solid dorado
+				.plus
+					padding-top 15px
+					padding-bottom 15px 
+				span
+					border 5px solid black
+					padding 5px
+					border-radius 100%
+				.icon-plus
+					background green
+				.icon-close
+					background red													
+	.main_newMovie, .main_consultaMovie, .main_consultaCliente, .main_inventario
+		display flex
+		width 80%
+		margin 0 auto
+		.contenido_newMovie, .contenido_consultaMovie, .contenido_consultaCliente, .contenido_inventario
+			h1
+				color dorado
+			width 100%
+			margin-bottom 25px
+			input
+				padding 5px
+				font-weight bold
+				color azul
+				margin-bottom 20px
+			table
+				font-size 20px 
+				color dorado 
+				padding-right 15px 
+				margin 0 auto
+				margin-bottom 10px 
+				input
+					width 150
+					font-weight bold 
+					color azul
+					font-size 15px 
+					margin 0 auto
+					padding 5px
+					margin-bottom 10px 
+					display block
+				.cantidad
+					width 50px
+					display inline-block
+				.camposConsultaClientes
+					width 300px
+						
+				select
+					margin-bottom 10px 
+				textarea
+					color azul
+					font-size 15px
+			.id_campo_pelicula
+				width 100px
+			.id_campo
+				width 50px
+			.datos_cliente
+				font-weight bold 
+				font-size 20px
+				input
+					width 200px
+					padding 0px
+					font-size 17px 
+			.rentas_table, #tablaInventario
+				width 100%
+				max-width 1024px
+				font-size 12px
+				border 2px solid dorado
+				th
+					font-size: 15px	
+					border 2px solid dorado
+				td
+					border 2px solid dorado
+				input
+					font-size: 10px			
+				a 
+					text-decoration none
+					color white
+					font-size 15px
+					font-weight bold  
+footer
+	display block
+	height 25px
+	background url("../img/bg_footer.jpg")
+	max-width ancho_max
+	margin 0 auto
+	color azul
+	.tpaw
+		margin-top 5px 
+		display inline-block
+		font-weight: bold
+		float left
+	.autor
+		margin-top 5px 
+		display inline-block
+		font-weight: bold
+		float right
+		
+@media screen and (max-width 538px)
+	footer
+		height 50px
+
+@media screen and (max-width 400px)
+	header
+		height 200px
+		img
+			margin 20px
+			margin-left 25%
+			height: 110px;
+			width: 200px;
+		nav
+			border-radius 10px 10px 0 10px
+			width 80%
+			height 100%
+			margin 0
+			position fixed
+			left  -100%
+			ul
+				width 100%
+				li
+					display block
+		.menu_bar
+			width 50px
+			height 50px
+			margin-left 15px
+			float left
+			display block

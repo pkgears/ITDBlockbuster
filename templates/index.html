@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="static/css/normalize.css">
+	<link rel="stylesheet" href="static/css/estilos.css">
+	<link rel="stylesheet" href="static/css/fonts.css">
+	<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+	<meta charset="UTF-8">
+	<title>Blockbuster</title>
+	<meta charset="UTF-8">
+</head>
+<body>
+	<header>
+		<div class="logo">
+			<img src="static/img/logo.png" alt="Blockbuster">
+		</div>
+		<div class="menu_bar">
+			<a class="bt_menu"><span class="icon-menu"></span></a>
+		</div>
+		<nav>
+			<ul class="main">
+				<li><a href="">Inicio</a></li>
+				<li><a href="#clientes">Clientes</a></li>
+				<li><a href="#catalogos">Películas</a></li>
+				<li><a href="logout">Salir</a></li>
+			</ul>		
+		</nav>
+	</header>
+	<section class="contenido">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+	</section>
+	<footer>
+		<div class="tpaw">Tópicos Avanzados de Programación Web</div>
+		<div class="autor">César Eduardo Ortíz Salazar</div>
+	</footer>
+	<!-- Templates -->
+	<script type="text/template" id="inicio">
+		<div class="main">
+			<div class="contenido_main">
+				<h1>Bienvenido <%=nombre%></h1>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="clientes">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_clientes">
+			<div class="menu_clientes">
+				<ul>
+					<li><a href="#clientes_new">Nuevo cliente</a></li>
+					<li><a href="#consulta_clientes">Consultar clientes</a></li>
+					<li><a href="#clientes_renta">Renta</a></li>
+				</ul>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="newCliente">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_newCliente">
+			<div class="form_newCliente">
+				<h1> Nuevo cliente</h1>
+				<form action="insertCliente" method="POST" autocomplete="off">
+					<input type="text" name="nombre"placeholder="Nombre(s)">
+					<input type="text" name="apellidos" placeholder="Apellidos">
+					<input type="text" name="direccion" placeholder="Direccion">
+					<input type="email" name="email" placeholder="Email">
+					<input type="tel" name="telefono" placeholder="Telefono" pattern="[0-9]{5,15}" title="Solo numeros">
+					<input type="submit" value="Guardar">
+				</form>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="consultaCliente">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_consultaCliente">
+			<div class="contenido_consultaCliente">
+				<h1>Consultar cliente</h1>
+				<div class="dato_consulta">
+					<h3>ID Cliente</h3>
+					<input type="text" class="id_campo" pattern="[0-9]" name="id" autocomplete="off">
+					<input type="button" value="Buscar" class="BuscarCliente">
+				</div>
+				
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="consultaClienteDatos">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_consultaCliente">
+			<div class="contenido_consultaCliente">
+				<h1>Consultar cliente</h1>
+				<div class="dato_consulta">
+					<form action="consultaCliente" method="POST">
+						<h3>ID Cliente</h3>
+						<input type="text" class="id_campo" pattern="[0-9]" name="id" value="<%=id_cliente%>" autocomplete="off">
+						<input type="button" value="Buscar" class="BuscarCliente">
+					</form>
+				</div>
+				<table class="datos_cliente">
+					<tr>
+						<td>Nombre</td>
+						<td><input type="text" disabled value="<%=nombre%> <%=apellido%>"></td>
+						<td>Direccion</td>
+						<td><input type="text" disabled value="<%=direccion%>"></td>
+					</tr>
+					<tr>
+						<td>Email</td>
+						<td><input type="text" disabled value="<%=email%>"></td>
+						<td>Telefono</td>
+						<td><input type="text" disabled value="<%=telefono%>"></td>
+					</tr>
+				</table>
+				<h3>Rentas</h3>
+				<table class="rentas_table" id="rentas">
+					<tr>
+						<th>ID Pelicula</th>
+						<th>Titulo pelicula</th>
+						<th>Fecha de renta</th>
+						<th>Fecha de entrega</th>
+						<th>Recibir</th>
+					</tr>
+				</table>
+				<h3>Entregadas</h3>
+				<table class="rentas_table" id="entregas">
+					<tr id="titles">
+						<th>ID Pelicula</th>
+						<th>Titulo pelicula</th>
+						<th>Fecha de renta</th>
+						<th>Fecha que entregó</th>
+					</tr>					
+				</table>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="consultaClienteRentas">	
+		<td>
+			<input type="text" disabled value="<%=id_pelicula%>" name="id_pelicula">
+		</td>
+		<td><input type="text" disabled value="<%=titulo%>"></td>
+		<td><input type="text" disabled value="<%=fecha_renta%>"></td>
+		<td><input type="text" disabled value="<%=fecha_entrega%>" name=""></td>
+		<td>
+			<form action="entregar" method="POST">
+				<input type="hidden" value="<%=id_renta%>" id="id_renta" name="id_renta">
+				<input type="hidden" value="<%=id_pelicula%>" name="id_pelicula">
+				<input type="submit" value="Entregar" id="entregarPeli" name="">
+			</form>
+		</td>
+	</script>
+	<script type="text/template" id="consultaClienteEntregas">
+		<td><input type="text" disabled value="<%=id_pelicula%>"></td>
+		<td><input type="text" disabled value="<%=titulo%>"></td>
+		<td><input type="text" disabled value="<%=fecha_renta%>"></td>
+		<td><input type="text" disabled value="<%=fecha_entrega%>"></td>
+	</script>
+	<script type="text/template" id="renta">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_renta">
+			<div class="renta_contenido">
+				<h1>Renta</h1>
+				<form action="insertRenta" method="POST">
+					<span>ID Cliente</span><input type="text" pattern="[0-9]" placeholder="ID Cliente" name="id_cliente" size="5" autocomplete="off" required>
+					<input type="hidden" name="veces" id="veces" value=1>
+					<table id="recibo_renta">
+						<tr>
+							<th>ID Pelicula</th>
+							<th>Fecha entrega</th>
+							<!--//<th>Costo</th>-->
+							<th>Eliminar</th>
+						</tr>
+						<tr>
+							<th><input type="text" pattern="[0-9]" name="articulo0" required autocomplete="off"></th>
+							<th><input type="date" name="fecha0" required></th>
+							<!--//<th><input type="text" class="costo" name="precio" required autocomplete="off"></th>-->
+							<td><input type="reset" value="Vaciar"></td>
+						</tr>
+						<tr class="add">
+							
+						</tr>
+						<tr>
+							<td class="plus"><span class="icon-plus" onclick="oneMore()"></span></td>
+						</tr>
+					</table>
+					<input type="submit" value="Confirmar">
+				</form>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="catalogo">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_catalogos">
+				<div class="menu_catalogos">
+					<ul>
+						<li><a href="#add_movie">Agregar peliculas</a></li>
+						<li><a href="#consulta_movie">Consultar peliculas</a></li>
+						<li><a href="#inventario">Inventario</a></li>
+						<li><a href="#allRentas">Rentas</a></li>
+					</ul>
+				</div>
+			</div>
+	</script>
+	<script type="text/template" id="addMovie">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_newMovie">
+			<div class="contenido_newMovie">
+				<h1>Agregar película</h1>
+				<form action="insertPelicula" method="POST" autocomplete="off">
+					<table>
+						<tr>
+							<td>Titulo:</td>
+							<td><input type="text" name="titulo" required></td>
+							<td>Duración:</td>
+							<td><input type="number" name="duracion" class="cantidad" min="1" required>minutos</td>
+						</tr>
+						<tr>
+							<td>Sinopsis:</td>
+							<td><textarea name="sinopsis" id="" cols="32" rows="10"></textarea></td>
+							<td>Actores</td>
+							<td><textarea name="actores" cols="32" rows="10"></textarea></td>
+						</tr>
+						<tr>
+							<td>Genero:</td>
+							<td>
+								<select name="genero" id="generosList" required>
+									
+								</select>
+							</td>
+							<td>Compañia:</td>
+							<td><input type="text" name="company" required></td>
+						</tr>
+						<tr>
+							<td>Director:</td>
+							<td><input type="text" name="director" required></td>
+							<td>Ubicación:</td>
+							<td>
+								<select name="ubicacion" id="ubicacionList" required>
+									
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Existencia:</td>
+							<td><input type="number" name="cantidad" class="cantidad" min="1" required></td>
+						</tr>
+					</table>
+					<input type="submit" value="Guardar">
+				</form>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="optionsGeneros">
+
+		<option value="<%=genero%>"><%=genero%></option>
+	</script>
+	<script type="text/template" id="optionsUbicacion">
+
+		<option value="<%=ubicacion%>"><%=ubicacion%></option>
+	</script>
+	<script type="text/template" id="tpl_consultaMovie">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_consultaMovie">
+			<div class="contenido_consultaMovie">
+				<h1>Consultar película</h1>
+				<input type="text" placeholder="ID película" pattern="[0-9]{1,5}" title="Intentelo de nuevo" name="id_pelicula" class="id_campo_pelicula" autocomplete="off">
+				<input type="button" value="Buscar" class="BuscarPelicula">
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="consultaMovie">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_consultaMovie">
+			<div class="contenido_consultaMovie">
+				<h1>Consultar película</h1>
+				<input type="text" placeholder="ID película" pattern="[0-9]{1,5}" title="Intentelo de nuevo" value="<%=id_pelicula%>" width="50px" class="id_campo" autocomplete="off">
+				<input type="button" value="Buscar" class="BuscarPelicula">
+				<form action="actualizarPelicula" method="POST" autocomplete="off">
+					<table border="3px">
+						<tr><input type="hidden" value="<%=id_pelicula%>"  name="id_pelicula">
+							<td>Titulo</td>
+							<td><input type="text" name="titulo" value="<%=titulo%>" class="camposConsultaClientes"></td>
+							<td>Duración</td>
+							<td><input type="number" name="duracion" value="<%=duracion%>" class="cantidad" class="camposConsultaClientes">minutos</td>
+						</tr>
+						<tr>
+							<td>Sinopsis</td>
+							<td><textarea name="sinopsis" id="" cols="32" rows="10"><%=sinopsis%></textarea></td>
+							<td>Actores</td>
+							<td><textarea name="actores" cols="32" rows="10"><%=actores%></textarea></td>
+						</tr>
+						<tr>
+							<td>Genero</td>
+							<td>
+								<select name="genero" id="generosList">
+									<option value="<%=genero%>"><%=genero%></option>
+								</select>
+							</td>
+							<td>Compañia</td>
+							<td><input type="text" name="company" value="<%=company%>" class="camposConsultaClientes"></td>
+						</tr>
+						<tr>
+							<td>Director</td>
+							<td><input type="number" name="director" value="<%=director%>" class="camposConsultaClientes"></td>
+							<td>Ubicación</td>
+							<td>
+								<select name="ubicacion" id="ubicacionList">
+									<option value="<%=ubicacion%>"><%=ubicacion%></option>
+								</select>
+							</td>
+						</tr>
+						<tr>
+							<td>Existencia</td>
+							<td>
+								<input type="number" value="<%=existencia%>"  name="existencia_nueva" class="cantidad">
+								<input type="hidden" name="existencia" value="<%=existencia%>"  name="existencia" class="cantidad">
+							</td>
+							<td>Disponibles</td>
+							<td><input type="number" name="disponibles" value="<%=disponibles%>" class="cantidad" readonly></td>
+						</tr>
+					</table>
+					<input type="submit" value="Guardar">
+				</form>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="inventario">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_inventario">
+			<div class="contenido_inventario">
+				<h1>Inventario de peliculas</h1>
+				<table  id="tablaInventario">
+					<tr>
+						<th>ID Pelicula</th>
+						<th>Titulo</th>
+						<th>Genero</th>
+						<th>Ubicacion</th>
+						<th>Disponibles</th>
+						<th>Existencia</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="inventarioTabla">
+			<td><a href="#consulta_movie/<%=id_pelicula%>" ><%=id_pelicula%></a></td>
+			<td><a href="#consulta_movie/<%=id_pelicula%>" ><%=titulo%></a></td>
+			<td><%=genero%></td>
+			<td><%=ubicacion%></td>
+			<td><%=disponibles%></td>
+			<td><%=existencia%></td>
+	</script>
+	<script type="text/template" id="inventarioRentas">
+		<a href="javascript:window.history.back();" class="back"><span class="icon-arrow-left"></span></a>
+		<div class="main_inventario">
+			<div class="contenido_inventario">
+				<h1>Rentas</h1>
+				<table  id="tablaInventario">
+					<tr>
+						<th>ID Pelicula</th>
+						<th>Titulo</th>
+						<th>ID Cliente</th>
+						<th>Fecha de renta</th>
+						<th>Fecha de entrega</th>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</script>
+	<script type="text/template" id="inventarioRentasTabla">
+			<td><a href="#consulta_movie/<%=id_pelicula%>" ><%=id_pelicula%></a></td>
+			<td><a href="#consulta_movie/<%=id_pelicula%>" ><%=titulo%></a></td>
+			<td><a href="#consultarCliente/<%=id_cliente%>" ><%=id_cliente%></a></td>
+			<td><%=fecha_renta%></td>
+			<td><%=fecha_entrega%></td>
+	</script>
+
+	<!-- Libs -->
+	<script src="static/js/vendor/jquery-1.11.1.min.js"></script>
+	<script src="static/js/vendor/menu.js"></script>
+	<script src="static/js/vendor/add.js"></script>
+	<script src="static/js/vendor/jquery.geturlparam.js"></script>
+	<script src="static/js/vendor/confirms.js"></script>
+	<script src="static/js/vendor/underscore.js"></script>
+	<script src="static/js/vendor/backbone.js"></script>
+	<script src="static/js/app.js"></script>
+	<!-- Models -->
+	<script src="static/js/models/cliente.js"></script>
+	<script src="static/js/models/pelicula.js"></script>
+	<script src="static/js/models/usuario.js"></script>
+	<script src="static/js/models/genero.js"></script>
+	<script src="static/js/models/ubicacion.js"></script>
+	<script src="static/js/models/renta.js"></script>
+	<script src="static/js/models/entrega.js"></script>
+	<!-- Collections -->
+	<script src="static/js/collections/catalogo.js"></script>
+	<script src="static/js/collections/generos.js"></script>
+	<script src="static/js/collections/ubicaciones.js"></script>
+	<script src="static/js/collections/peliculas.js"></script>
+	<script src="static/js/collections/clientes.js"></script>
+	<script src="static/js/collections/rentas.js"></script>
+	<script src="static/js/collections/entregas.js"></script>
+	<!-- Views -->
+	<script src="static/js/views/index.js"></script>
+	<script src="static/js/views/clientes.js"></script>
+	<script src="static/js/views/newcliente.js"></script>
+	<script src="static/js/views/consultaCliente.js"></script>
+	<script src="static/js/views/consultaClienteDatos.js"></script>
+	<script src="static/js/views/rentasTable.js"></script>
+	<script src="static/js/views/entregasTable.js"></script>
+	<script src="static/js/views/renta.js"></script>
+	<script src="static/js/views/catalogo.js"></script>
+	<script src="static/js/views/generos.js"></script>
+	<script src="static/js/views/ubicaciones.js"></script>
+	<script src="static/js/views/addMovie.js"></script>
+	<script src="static/js/views/tplConsultaMovie.js"></script>
+	<script src="static/js/views/consultaMovie.js"></script>
+	<script src="static/js/views/inventario.js"></script>
+	<script src="static/js/views/inventarioTable.js"></script>
+	<script src="static/js/views/inventarioRentas.js"></script>
+	<script src="static/js/views/inventarioRentasTabla.js"></script>
+	<!-- Routes -->
+	<script src="static/js/routes/router.js"></script>
+	<!-- Extras -->
+
+</body>
+</html>

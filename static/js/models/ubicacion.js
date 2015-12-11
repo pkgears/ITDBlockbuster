@@ -1,0 +1,1 @@
+Blockbuster.Models.Ubicacion = Backbone.Model.extend({});

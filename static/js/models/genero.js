@@ -1,0 +1,1 @@
+Blockbuster.Models.Genero = Backbone.Model.extend({});
